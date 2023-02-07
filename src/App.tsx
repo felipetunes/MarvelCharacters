@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Image } from 'react-native';
-import axios from 'axios';
+import React from 'react';
 import type {PropsWithChildren} from 'react';
+import Characters from './pages/Characters';
+
 import {
-  Alert,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -16,6 +15,7 @@ import {
 import {
   Colors
 } from 'react-native/Libraries/NewAppScreen';
+
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -54,17 +54,6 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const [deck, setDeck] = useState('');
-
-  const baseURL = 'https://deckofcardsapi.com/api/deck';
-  
-  useEffect(() => {
-    (async () => {
-        let deckReq = await axios.get(`${baseURL}/new/shuffle/?deck_count=1`);
-        setDeck(deckReq.data);
-    })();
-    }, []);
-
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -74,13 +63,8 @@ function App(): JSX.Element {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <View>
-        <Button
-                    //onPress={}
-                    title="Random Card"
-                    color="#EABA40"
-                    accessibilityLabel="Get a new random card"
-        /> 
+        <View> 
+          <Characters/>
         </View>
       </ScrollView>
     </SafeAreaView>
