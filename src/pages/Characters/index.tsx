@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
+
 import api from '../../services/api';
 import {
+  View,
   Button,
   Text,
-  View,
+  FlatList,
   StyleSheet,
+  Image
 } from 'react-native';
 
 interface ResponseData{
@@ -47,38 +50,43 @@ function Characters(): JSX.Element {
     }
     },[characters]);
 
-      return <>
-      <View style={styles.sectionContainer}>
-      {  
-        characters.map((character) => (
-          <>
-            <Text>{character.name}</Text>
-          </>
-        ))
-        
-      }
-      <Button title='Button1' onPress={handleMore}/>
-      </View>
-      </>
-  
+      return (
+        <FlatList
+          style={styles.list}
+          data={characters}
+          renderItem={({item}) => 
+              <View style={styles.listItem}>
+                <Text style={{fontSize:20}}>{item.name}</Text>
+                <Image 
+                style={styles.image}
+                source={{
+                  uri: `${item.thumbnail.path}.${item.thumbnail.extension}`,
+                }}/>
+              </View>
+            }
+          keyExtractor={item => item.id}
+          onEndReached={handleMore}
+        />
+      )
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  image: {
+    margin:15,
+    width: 250,
+    height:200,
+    borderRadius:5
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  list: {
+    padding: 20,
+    backgroundColor:'WhiteSmoke',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  listItem: {
+    backgroundColor:'white',
+    margin:5,
+    padding:10,
+    borderRadius:5,
+    alignItems:'center'
   },
 });
 

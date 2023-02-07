@@ -60,10 +60,10 @@ function App(): JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
+      <ScrollView horizontal={true}
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <View> 
+        <View style={styles.sectionContainer}> 
           <Characters/>
         </View>
       </ScrollView>
